@@ -1,0 +1,39 @@
+body {
+    font-family: Arial, sans-serif;
+  }
+  
+  h1 {
+    text-align: center;  
+  }
+  
+  form {
+    width: 60%;
+    margin: 0 auto;
+  }
+  
+  label {
+    display: inline-block;
+    width: 100px;
+  }
+  
+  input, select, textarea {
+    width: 300px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  input[type="submit"] {
+    width: auto;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  input[type="submit"]:hover {
+    background-color: #45a049;
+  }

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="css/signupPage.css" />
+    <script src="javaScript/signup.js"></script>
+  </head>
+  <body>
+    <h1>SIGN UP</h1>
+    <form id="signup-form">
+      <label for="username">Username:</label>
+      <input id="username" type="text" /><br />
+      <label for="password">Password:</label>
+      <input id="password" type="password" /><br />
+      <label for="repassword">Re-enter Password:</label>
+      <input type="password" id="repassword" name="repassword" /><br />
+      <label for="email">Email:</label> <input id="email" type="email" /><br />
+      <label for="blood">Blood Type:</label>
+      <select id="blood" name="bloodtype">
+        <option value="">Select</option>
+        <option value="A+">A+</option>
+        <option value="A-">A-</option>
+        <option value="B+">B+</option>
+        <option value="B-">B-</option>
+        <option value="AB+">AB+</option>
+        <option value="AB-">AB-</option>
+        <option value="O+">O+</option>
+        <option value="O-">O-</option></select
+      ><br />
+      <label for="phone">Phone Number:</label>
+      <input type="tel" id="phone" name="phone" /><br />
+      <label for="address">Address:</label>
+      <textarea id="address" name="address"></textarea><br />
+      <input type="submit" value="Sign Up" />
+    </form>
+  </body>
+</html>
