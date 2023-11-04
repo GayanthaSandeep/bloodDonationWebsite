@@ -192,6 +192,7 @@ const BloodRequest = sequelize.define("BloodRequest", {
   },
 });
 
+
 // Sync the User model with the database
 sequelize
   .sync()
@@ -219,6 +220,10 @@ app.get("/bloodDoner.html", (req, res) => {
 
 app.get("/requestBlood.html", (req, res) => {
   res.sendFile("/requestBlood.html", { root: __dirname });
+});
+
+app.get("/admin.html", (req, res) => {
+  res.sendFile("/admin.html", { root: __dirname });
 });
 
 
@@ -310,6 +315,29 @@ app.post('/login', async (req, res) => {
     res.status(500).send('An error occurred while logging in. Please try again later.');
   }
 });
+
+// Get Blood Requests
+app.get('/bloodrequests', async (req, res) => {
+  try {
+    const bloodRequests = await BloodRequest.findAll();
+    res.json(bloodRequests);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error',error });
+  }
+});
+
+// Get Blood Donors
+app.get('/blooddonors', async (req, res) => {
+  try {
+    const bloodDonors = await BloodDonor.findAll({
+      include: User, // Include user details in the response
+    });
+    res.json(bloodDonors);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 
 
 app.listen(port, () => {
