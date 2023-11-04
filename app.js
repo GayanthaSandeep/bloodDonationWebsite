@@ -51,6 +51,9 @@
 //   lastDonated: {
 //     type: DataTypes.DATE,
 //   },
+//   weight : {
+//     type: DataTypes.STRING
+//   }
 // });
 
 // // Define BloodRequest model
@@ -65,7 +68,7 @@
 //     references: {
 //       model: User, // 'User' model
 //       key: "userId", // Foreign key
-//     },
+//     },},
 //     requestdate: {
 //       type: DataTypes.DATE,
 //     },
@@ -75,7 +78,7 @@
 //     reason: {
 //       type: DataTypes.STRING,
 //     },
-//   },
+  
 // });
 
 // const Admin = sequelize.define("Admin", {
@@ -94,7 +97,7 @@
 // });
 
 // // Sync models to database
-// sequelize.sync();const express = require('express');
+// sequelize.sync();
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -164,10 +167,13 @@ const BloodDonor = sequelize.define("BloodDonor", {
   lastDonated: {
     type: DataTypes.DATE,
   },
+  weight : {
+    type: DataTypes.STRING
+  }
 });
 
 
-// Define BloodRequest model
+ // Define BloodRequest model
 const BloodRequest = sequelize.define("BloodRequest", {
   requestId: {
     type: DataTypes.INTEGER,
@@ -179,7 +185,7 @@ const BloodRequest = sequelize.define("BloodRequest", {
     references: {
       model: User, // 'User' model
       key: "userId", // Foreign key
-    },
+    },},
     requestdate: {
       type: DataTypes.DATE,
     },
@@ -189,8 +195,10 @@ const BloodRequest = sequelize.define("BloodRequest", {
     reason: {
       type: DataTypes.STRING,
     },
-  },
+  
 });
+BloodRequest.belongsTo(User, { foreignKey: 'userId' });
+BloodDonor.belongsTo(User, { foreignKey: 'userId' }); 
 
 
 // Sync the User model with the database
@@ -319,7 +327,9 @@ app.post('/login', async (req, res) => {
 // Get Blood Requests
 app.get('/bloodrequests', async (req, res) => {
   try {
-    const bloodRequests = await BloodRequest.findAll();
+    const bloodRequests = await BloodRequest.findAll({
+      include: User, // Include user details
+    });
     res.json(bloodRequests);
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error',error });
@@ -330,7 +340,7 @@ app.get('/bloodrequests', async (req, res) => {
 app.get('/blooddonors', async (req, res) => {
   try {
     const bloodDonors = await BloodDonor.findAll({
-      include: User, // Include user details in the response
+      include: User, // Include user details
     });
     res.json(bloodDonors);
   } catch (error) {

@@ -6,9 +6,9 @@ document.addEventListener("DOMContentLoaded", function () {
       const userData = {
         name: document.getElementById("name").value,
         email: document.getElementById("email").value,
-        bloodType: document.getElementById("bloodtype").value,
+        bloodtype: document.getElementById("bloodtype").value,
         reason: document.getElementById("reason").value,
-        date: document.getElementById("date").value,
+        requestdate: document.getElementById("date").value,
       };
 
     try {

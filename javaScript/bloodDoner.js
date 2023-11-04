@@ -7,7 +7,8 @@ document.addEventListener("DOMContentLoaded", function () {
      name:document.getElementById('name').value,
      email :document.getElementById('email').value,
      bloodTypeInput : document.getElementById('bloodtype').value,
-     lastDonatedInput : document.getElementById('lastDonated').value
+     lastDonated : document.getElementById('lastDonated').value,
+     weight : document.getElementById('weight').value
     };
 
   try {
