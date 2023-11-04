@@ -98,6 +98,33 @@
 
 // // Sync models to database
 // sequelize.sync();
+// Create a new user and save it to the User table
+// User.create({
+//   name: 'admin',
+//   email: 'admin@gmail.com',
+//   password: '1234',
+//   bloodtype: 'A+',
+//   contactinformation: '123-456-7890',
+//   location: 'New York',
+// })
+//   .then((user) => {
+//     console.log('User created:', user.toJSON());
+//   })
+//   .catch((error) => {
+//     console.error('Error creating user:', error);
+//   });
+
+
+// Admin.create({
+//   userId: 1, // Replace with the actual user's ID
+// })
+//   .then((admin) => {
+//     console.log('Admin created:', admin.toJSON());
+//   })
+//   .catch((error) => {
+//     console.error('Error creating admin:', error);
+//   });
+
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -197,6 +224,22 @@ const BloodRequest = sequelize.define("BloodRequest", {
     },
   
 });
+const Admin = sequelize.define("Admin", {
+  adminid: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  userId: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: User, 
+      key: "userId", 
+    },
+  },
+});
+
+
 BloodRequest.belongsTo(User, { foreignKey: 'userId' });
 BloodDonor.belongsTo(User, { foreignKey: 'userId' }); 
 
@@ -230,6 +273,9 @@ app.get("/requestBlood.html", (req, res) => {
   res.sendFile("/requestBlood.html", { root: __dirname });
 });
 
+app.get("/adminAuthentication.html", (req, res) => {
+  res.sendFile("/adminAuthentication.html", { root: __dirname });
+});
 app.get("/admin.html", (req, res) => {
   res.sendFile("/admin.html", { root: __dirname });
 });
@@ -262,7 +308,6 @@ app.post("/bloodDonor", async (req, res) => {
 
 // Handle form submission
 app.post("/submitUser", async (req, res) => {
-  console.log("dgfh")
   const userData = req.body;
 
   // Serve your HTML form
@@ -323,6 +368,35 @@ app.post('/login', async (req, res) => {
     res.status(500).send('An error occurred while logging in. Please try again later.');
   }
 });
+
+app.post('/adminLogin', async (req, res) => {
+  const {email,password} = req.body;
+
+  try {
+    // Find the user by email
+    const user = await User.findOne({ where: { email: email } });
+
+    if (!user) {
+      return res.status(400).send('User not found');
+    }
+
+    // Check if the user is an admin
+    const isAdmin = await Admin.findOne({ where: { userId: user.id } });
+
+    if (isAdmin) {
+      // Login successful
+      res.status(200).send('Admin login successful');
+    } else {
+      // Login failed
+      res.status(400).send('You are not authorized to access this page');
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('An unexpected error occurred.');
+  }
+});
+
+
 
 // Get Blood Requests
 app.get('/bloodrequests', async (req, res) => {
