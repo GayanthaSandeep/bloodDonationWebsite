@@ -205,6 +205,9 @@ app.use(bodyParser.json());
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/index.html");
 });
+app.get("/home.html", (req, res) => {
+  res.sendFile(__dirname + "/home.html");
+});
 // Route to serve the 'signupPage.html' file
 app.get("/signup.html", (req, res) => {
   res.sendFile("/signup.html", { root: __dirname });
@@ -284,6 +287,27 @@ app.post('/bloodRequest', async (req, res) => {
   } catch (error) {
     console.error("Error creating donor:", error);
     res.status(500).send("Error registering the donor.");
+  }
+});
+
+app.post('/login', async (req, res) => {
+  const userData = req.body;
+  try {
+    const user = await User.findOne({ where: { email: userData.email } });
+
+    if (!user) {
+      return res.status(400).send('User not found');
+    }
+
+    if (user.password === userData.password) {
+      // Successful login, you can add a user session here if needed
+      res.status(200).send('Login successful');
+    } else {
+      res.status(400).send('Invalid password');
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('An error occurred while logging in. Please try again later.');
   }
 });
 
