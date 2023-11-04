@@ -1,19 +1,18 @@
 document.addEventListener("DOMContentLoaded", function () {
   document
-    .getElementById("donor-form")
+    .getElementById("blood-request-form")
     .addEventListener("submit", async (e) => {
       e.preventDefault();
       const userData = {
         name: document.getElementById("name").value,
         email: document.getElementById("email").value,
-        bloodTypeInput: document.getElementById("bloodtype").value,
-        lastDonated: document.getElementById("lastDonated").value,
-        weight: document.getElementById("weight").value,
+        bloodtype: document.getElementById("bloodtype").value,
+        reason: document.getElementById("reason").value,
+        requestdate: document.getElementById("date").value,
       };
 
       try {
-        // POST request to API endpoint
-        const response = await fetch("http://localhost:3000/bloodDonor", {
+        const response = await fetch("http://localhost:3000/bloodRequest", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -22,17 +21,17 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         if (response.ok) {
-          alert("Donor added successfully!");
+          console.log("Success:", response);
           this.location.reload();
-          console.log("Donor added successfully!");
+          console.log("Blood Request Success");
         } else if (response.status === 404) {
           alert("Name and Email unmatched!");
           location.reload();
         } else {
-          console.error("Error adding donor");
+          console.error("Error registering the user.");
         }
       } catch (error) {
-        console.error(error);
+        console.error("Error:", error);
       }
     });
 });
