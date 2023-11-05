@@ -6,20 +6,19 @@ document.addEventListener("DOMContentLoaded", function () {
       const userData = {
         name: document.getElementById("username").value,
         password: document.getElementById("password").value,
+        repassword: document.getElementById("repassword").value,
         email: document.getElementById("email").value,
         bloodtype: document.getElementById("blood").value,
         contactinformation: document.getElementById("phone").value,
         location: document.getElementById("address").value,
       };
-      if (password !== repassword) {
+      console.log(password.value)
+      console.log(repassword.value)
+      if (password.value !== repassword.value) {
         alert("Passwords do not match. Please re-enter.");
         return;
       }
-       const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-      if (!email.match(emailPattern)) {
-        alert("Invalid email format. Please enter a valid email address.");
-        return;
-      }
+    
 
       try {
         const response = await fetch("http://localhost:3000/submitUser", {
