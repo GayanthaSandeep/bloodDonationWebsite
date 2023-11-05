@@ -1,0 +1,58 @@
+.page {
+    overflow-x: hidden;
+}
+
+.landing-section {
+    position: relative;
+    background: #f2f8ff;
+}
+
+.landing-section-text-col {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    margin-left: 80px;
+}
+
+.logo-text {
+    font-size: 75px;
+    font-weight: 800;
+    line-height: 1;
+    text-transform: uppercase;
+}
+
+.logo-description {
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.slogan {
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 1.2;
+}
+
+.landing-section-image {
+    padding-top: 40px;
+    width: 100%;
+}
+
+.hero-img {
+    width: 100%;
+}
+
+.landing-section-card-description {
+    text-align: justify;
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.about-blood-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+}
