@@ -24,6 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
           const errorText = await response.text();
           alert("Error: " + errorText);
         } else {
+            console.log("Check");
           // Unexpected error
           alert("An unexpected error occurred.");
         }

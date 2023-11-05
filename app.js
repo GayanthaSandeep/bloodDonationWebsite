@@ -32,6 +32,11 @@
 //   location: {
 //     type: DataTypes.STRING,
 //   },
+//   admin: {
+//     type: DataTypes.BOOLEAN, 
+//     defaultValue: false, 
+//   }
+  
 // });
 
 // // Define BloodDonor model
@@ -81,24 +86,10 @@
   
 // });
 
-// const Admin = sequelize.define("Admin", {
-//   adminid: {
-//     type: DataTypes.INTEGER,
-//     primaryKey: true,
-//     autoIncrement: true,
-//   },
-//   userId: {
-//     type: DataTypes.INTEGER,
-//     references: {
-//       model: User, // 'User' model
-//       key: "userId", // Foreign key
-//     },
-//   },
-// });
 
 // // Sync models to database
 // sequelize.sync();
-// Create a new user and save it to the User table
+// //Create a new user and save it to the User table
 // User.create({
 //   name: 'admin',
 //   email: 'admin@gmail.com',
@@ -106,6 +97,7 @@
 //   bloodtype: 'A+',
 //   contactinformation: '123-456-7890',
 //   location: 'New York',
+//   admin: true
 // })
 //   .then((user) => {
 //     console.log('User created:', user.toJSON());
@@ -115,15 +107,6 @@
 //   });
 
 
-// Admin.create({
-//   userId: 1, // Replace with the actual user's ID
-// })
-//   .then((admin) => {
-//     console.log('Admin created:', admin.toJSON());
-//   })
-//   .catch((error) => {
-//     console.error('Error creating admin:', error);
-//   });
 
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -175,7 +158,12 @@ const User = sequelize.define("User", {
   location: {
     type: DataTypes.STRING,
   },
+  admin: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false, 
+  }
 });
+
 
 // Define BloodDonor model
 const BloodDonor = sequelize.define("BloodDonor", {
@@ -223,20 +211,6 @@ const BloodRequest = sequelize.define("BloodRequest", {
       type: DataTypes.STRING,
     },
   
-});
-const Admin = sequelize.define("Admin", {
-  adminid: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-  },
-  userId: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: User, 
-      key: "userId", 
-    },
-  },
 });
 
 
@@ -370,20 +344,18 @@ app.post('/login', async (req, res) => {
 });
 
 app.post('/adminLogin', async (req, res) => {
-  const {email,password} = req.body;
+  const userData = req.body;
 
   try {
     // Find the user by email
-    const user = await User.findOne({ where: { email: email } });
+    const user = await User.findOne({ where: { email: userData.email } });
 
     if (!user) {
       return res.status(400).send('User not found');
     }
 
     // Check if the user is an admin
-    const isAdmin = await Admin.findOne({ where: { userId: user.id } });
-
-    if (isAdmin) {
+    if (user.admin) { // Check if the 'admin' field is true
       // Login successful
       res.status(200).send('Admin login successful');
     } else {
