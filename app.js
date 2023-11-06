@@ -18,6 +18,8 @@ app.use(
   express.static(__dirname + "/javaScript", { extensions: ["js"] })
 );
 
+app.use("/images",express.static(__dirname+"/images"));
+
 sequelize
   .authenticate()
   .then(() => console.log("Connected to database"))
