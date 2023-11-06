@@ -11,6 +11,15 @@ document.addEventListener("DOMContentLoaded", function () {
         contactinformation: document.getElementById("phone").value,
         location: document.getElementById("address").value,
       };
+      if (password !== repassword) {
+        alert("Passwords do not match. Please re-enter.");
+        return;
+      }
+       const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+      if (!email.match(emailPattern)) {
+        alert("Invalid email format. Please enter a valid email address.");
+        return;
+      }
 
       try {
         const response = await fetch("http://localhost:3000/submitUser", {
@@ -23,6 +32,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (response.ok) {
           console.log("User successfully signed up:", response);
+          alert("Successfully Registered!!")
+          window.location.href = '/home.html';
         } else {
           console.error("Error signing up the user.");
         }
