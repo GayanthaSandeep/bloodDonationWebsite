@@ -145,6 +145,12 @@ app.get("/adminAuthentication.html", (req, res) => {
 app.get("/admin.html", (req, res) => {
   res.sendFile("/admin.html", { root: __dirname });
 });
+app.get("/contactUs.html", (req, res) => {
+  res.sendFile("/contactUs.html", { root: __dirname });
+});
+app.get("/whyDonateBlood.html", (req, res) => {
+  res.sendFile("/whyDonateBlood.html", { root: __dirname });
+});
 
 
 //this is for doner html
